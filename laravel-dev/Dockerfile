@@ -1,5 +1,3 @@
-# wkan/laravel-dev
-
 FROM debian:jessie
 MAINTAINER Wkan wangkan1119@gmail.com
 
@@ -27,6 +25,9 @@ php5-mysql \
 php5-sqlite \
 php5-pgsql \
 php5-mongo \
+php5-mbstring \
+php5-openssl \
+php5-phar \
 php5-tidy \
 php5-xmlrpc \
 php5-xsl && \
@@ -64,8 +65,6 @@ RUN php5enmod mcrypt
 
 # nginx site conf
 RUN rm -rf /etc/nginx/conf.d/*
-#rm -rf /etc/nginx/site-available/default
-#mkdir -p /erc/nginx/ssl/
 ADD ./nginx-site.conf /etc/nginx/conf.d/default.conf
 
 # supervisor config
@@ -79,7 +78,7 @@ RUN chmod 755 /start.sh
 # VOLUME ["/usr/share/nginx/html"]
 
 # add test PHP file
-ADD ./tz.php /usr/share/nginx/html/tz.php
+ADD ./tz.php /usr/share/nginx/html/public/tz.php
 RUN chown -Rf www-data.www-data /usr/share/nginx/html/
 
 EXPOSE 80
